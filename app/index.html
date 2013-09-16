@@ -9,8 +9,10 @@
 </head>
 <body>
   <div ng-view></div>
-
-  <div flip-switch></div>
+  <div ng-controller="flipSwitchCtrl">
+    <div flip-switch config="flipSwitchConfig"></div>
+    {{ flipSwitchConfig }}
+  </div>
   <!-- In production use:
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
   -->
