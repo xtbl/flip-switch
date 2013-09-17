@@ -39,40 +39,27 @@ angular.module('myApp.directives', []).
     return {
         restrict:'A',
         scope: true,//{ flipSwitchConfig: '=config' },
+        replace: false,
         // Todo:
         // transclude, add external attributes, watch, model
-        template: '<label for="flip-1">temp label: {{ flipSwitchConfig.label }}  </label>State: {{ flipSwitchSelect }} <a href="#">Help</a><select ng-model="flipSwitchSelect" name="flip-1" id="flip-1" data-role="slider"><option value="off">Off</option><option value="on">{{ flipSwitchConfig.stateLabels.first }}</option></select>',
+        template: '<label for="flip-1">temp label: {{ flipSwitchConfig.label }}  </label>State: {{ flipSwitchSelect }} <a href="#">Help</a><span>{{ flipSwitchConfig.stateLabels.second }}</span><select ng-model="flipSwitchSelect" name="flip-1" id="flip-1" data-role="slider"><option value="off">{{ flipSwitchConfig.stateLabels.second }}</option><option value="on">{{ flipSwitchConfig.stateLabels.first }}</option></select>',
         // Todo: use defaults to compile then watch if there are config values set
-        compile: function () {
-            return {
-                pre: function ($scope, iElement, iAttrs) {
+        compile: function(element, attrs) {
+            element.find('select').slider();
 
-                    var fSwitch = new flipSwitch($scope, $scope.flipSwitchConfig);
-                    fSwitch.init();
-                    iElement.find('select').slider();
-                    //iElement.find('select').trigger('create');
-                    iElement.find('select').bind( "change", function(event, ui) {
-                        console.log('slider change: '+ event);
-                        $scope.flipSwitchState = $scope.flipSwitchSelect;
-                        console.log('switch state: '+ $scope.flipSwitchState);
-                    });
-                }
+            // returns link function
+            return function (scope, iElement, iAttrs) {
+                var fSwitch = new flipSwitch(scope, scope.flipSwitchConfig);
+                console.log('values: '+ angular.element(iElement).find('option')[1].innerHTML);
+                fSwitch.init();
+                //iElement.find('select').slider();
+                iElement.find('select').bind( "change", function(event, ui) {
+                    console.log('slider change: '+ event);
+                    scope.flipSwitchState = scope.flipSwitchSelect;
+                    console.log('switch state: '+ scope.flipSwitchState);
+
+                });
             }
-        },
-        link: function(scope, element, attrs) {
-            //element.find('select').slider();
-            console.log('flipswitch value: '+ scope.flipSwitchSelect);
-            console.log('label: '+ attrs.config);
-            console.log('scope.$parent.flipSwitchConfig.label: '+ scope.$parent.flipSwitchConfig.label);
-            console.log('scope.flipSwitchConfig.label inside directive: '+ scope.flipSwitchConfig.label);
-            element.find('select').slider('refresh');
-
-            element.find('label').attr('label', attrs.config.label);
-
-
-            return null;
-        },
-
-        replace: false
+        }
     };
   }]);
