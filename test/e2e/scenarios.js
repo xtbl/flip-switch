@@ -2,44 +2,37 @@
 
 /* http://docs.angularjs.org/guide/dev_guide.e2e-testing */
 
-describe('my app', function() {
+describe('angular flip-switch', function() {
 
   beforeEach(function() {
     browser().navigateTo('../../app/index.html');
   });
 
-
-  it('should automatically redirect to /view1 when location hash/fragment is empty', function() {
-    expect(browser().location().url()).toBe("/view1");
-  });
-
-
-  describe('view1', function() {
-
-    beforeEach(function() {
-      browser().navigateTo('#/view1');
+    it('should render the flip-switch directive', function() {
+        expect(element('select').html()).toBeDefined();
     });
 
-
-    it('should render view1 when user navigates to /view1', function() {
-      expect(element('[ng-view] p:first').text()).
-        toMatch(/partial for view 1/);
+    it('should render flip-switch options', function() {
+        console.log('select is: ' + element('select').html());
+        expect(element('select').html()).toContain('ON');
+        expect(element('select').html()).toContain('OFF');
     });
 
-  });
-
-
-  describe('view2', function() {
-
-    beforeEach(function() {
-      browser().navigateTo('#/view2');
+    it('should display the flip-switch label', function() {
+        expect(element('label').html()).toContain('Flip Switch Label');
     });
 
-
-    it('should render view2 when user navigates to /view2', function() {
-      expect(element('[ng-view] p:first').text()).
-        toMatch(/partial for view 2/);
+    it('should slide the switch state when "ON" is selected', function() {
+        select('flipSwitchSelect').option('on');
+        expect(element('.ui-slider-label-a').attr('style')).toBe('width: 100%;');
+        expect(element('.ui-slider-label-b').attr('style')).toBe('width: 0%;');
     });
 
-  });
+    it('should slide the switch state when "OFF" is selected', function() {
+        select('flipSwitchSelect').option('on');
+        select('flipSwitchSelect').option('off');
+        expect(element('.ui-slider-label-a').attr('style')).toBe('width: 0%;');
+        expect(element('.ui-slider-label-b').attr('style')).toBe('width: 100%;');
+    });
+
 });

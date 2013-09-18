@@ -3,6 +3,8 @@ module.exports = function(config) {
 		basePath: '../',
 		frameworks: ['jasmine'],
 		files: [
+            'app/lib/jquery/jquery-1.10.2.min.js',
+            'app/lib/jquery-mobile/jquery.mobile-1.3.2.min.js',
 			'app/lib/angular/angular.js',
 			'app/lib/angular/angular-*.js',
 			'test/lib/angular/angular-mocks.js',
@@ -11,6 +13,9 @@ module.exports = function(config) {
 		],
 		autoWatch: true,
 		browsers: ['Chrome'],
+        preprocessors: {
+            'templates/**/*.html': 'ng-html2js'
+        },
 		junitReporter: {
 			outputFile: 'test_out/unit.xml',
 			suite: 'unit'

@@ -1,13 +1,16 @@
 module.exports = function(config) {
 	config.set({
 		basePath: '../',
-		frameworks: ['ng-scenario'],
+        plugins: ['karma-ng-scenario', 'karma-jasmine', 'karma-chrome-launcher','karma-html2js-preprocessor'],
+        frameworks: ['ng-scenario'],
 		files: [
 			'test/e2e/**/*.js'
 		],
 		autoWatch: false,
 		browsers: ['Chrome'],
-		singleRun: true,
+		singleRun: false,
+        autoWatch: true,
+        urlRoot: '/_karma_/',
 		proxies: {
 			'/': 'http://localhost:8000/'
 		},
