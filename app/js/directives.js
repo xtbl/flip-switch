@@ -42,7 +42,8 @@ angular.module('myApp.directives', []).
         replace: false,
         // Todo:
         // transclude, add external attributes, watch, model
-        template: '<label for="flip-1">temp label: {{ flipSwitchConfig.label }}  </label>State: {{ flipSwitchSelect }} <a href="#">Help</a><span>{{ flipSwitchConfig.stateLabels.second }}</span><select ng-model="flipSwitchSelect" name="flip-1" id="flip-1" data-role="slider"><option value="off">{{ flipSwitchConfig.stateLabels.second }}</option><option value="on">{{ flipSwitchConfig.stateLabels.first }}</option></select>',
+        template: '<label for="flip-1">{{ flipSwitchConfig.label }}  </label>'+
+                    '<a ng-show="flipSwitchConfig.help" href="{{ flipSwitchConfig.help }}"><img ng-src="img/more_information_icon.jpg"></a><div class="ng-flip-switch-click-area"><span>{{ flipSwitchConfig.stateLabels.second }}</span><select ng-model="flipSwitchSelect" name="flip-1" id="flip-1" data-role="slider"><option value="off"></option><option value="on"></option></select><span>{{ flipSwitchConfig.stateLabels.first }}</span></div><br> State: {{ flipSwitchSelect }} ',
         // Todo: use defaults to compile then watch if there are config values set
         compile: function(element, attrs) {
             element.find('select').slider();

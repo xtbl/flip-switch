@@ -1,5 +1,29 @@
 /* app css stylesheet */
 
+/* Flip Switch CSS */
+
+.ng-flip-switch-container {
+    float: left;
+}
+
+.ng-flip-switch-container > * {
+    float: left;
+    padding: 10px;
+}
+
+div.ui-slider-switch {
+    width: 3.8em;
+    padding: 0;
+}
+
+.ng-flip-switch-click-area {
+    border: 1px solid #d5d5d5;
+}
+
+/* Flip Switch CSS */
+
+
+
 .menu {
   list-style: none;
   border-bottom: 0.1em solid black;

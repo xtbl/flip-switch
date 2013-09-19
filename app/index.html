@@ -9,8 +9,11 @@
 </head>
 <body>
   <div ng-view></div>
+  <h3>ng Flip Switch</h3>
   <div ng-controller="flipSwitchCtrl">
-    <div flip-switch config="flipSwitchConfig"></div>
+    <div flip-switch config="flipSwitchConfig" class="ng-flip-switch-container"></div>
+    <div flip-switch config="flipSwitchConfig" class="ng-flip-switch-container"></div>
+    <div flip-switch config="flipSwitchConfig" class="ng-flip-switch-container"></div>
     {{ flipSwitchConfig }}
   </div>
   <!-- In production use:
