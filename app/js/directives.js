@@ -10,16 +10,17 @@ angular.module('myApp.directives', []);
     var flipSwitch = function ($scope, options, $templateCache, $http, $q) {
         var defaults = {
             "label": 'Flip Switch Label',
-            "state" : 'off',
+            "state" : 'false',
             "help" : undefined,
             "stateLabels" : {"first":'ON', "second":'OFF'},
             "flipSwitchChangeState" : function() {
-                if($scope.flipSwitchState === "true") {
-                    $scope.flipSwitchState = "false";
-                    console.log('flipSwitchChangeState: ' + $scope.flipSwitchState);
+
+                if($scope.flipSwitchSelect === "true") {
+                    $scope.flipSwitchSelect = "false";
+                    $scope.switchBtnPosition = "0%";
                 } else {
-                    $scope.flipSwitchState = "true";
-                    console.log('flipSwitchChangeState: ' + $scope.flipSwitchState);
+                    $scope.flipSwitchSelect = "true";
+                    $scope.switchBtnPosition = "100%";
                 }
             },
             // default directive template
@@ -76,8 +77,7 @@ angular.module('myApp.directives', []);
             $scope.flipSwitchConfig.help = self.config.help;
             $scope.flipSwitchConfig.stateLabels = self.config.stateLabels;
             $scope.flipSwitchChangeState = self.config.flipSwitchChangeState;
-            console.log('self.config: '+ JSON.stringify(self.config) );
-            console.log('flipSwitch template: ' + $templateCache.get('templates/ngFlipSwitch.html'));
+            $scope.flipSwitchSelect = self.config.state;
         });
 
         }
@@ -90,10 +90,8 @@ angular.module('myApp.directives', []).
   directive('flipSwitch', ['$compile','$templateCache', '$http', '$q', function($compile, $templateCache, $http, $q) {
     return {
         restrict:'A',
-        scope: true,//{ flipSwitchConfig: '=config' },
+        scope: true,
         replace: false,
-        // Todo:
-        // transclude, add external attributes, watch, model
         compile: function(element, attrs) {
             // returns link function
             return function (scope, iElement, iAttrs) {
@@ -101,24 +99,13 @@ angular.module('myApp.directives', []).
                 fSwitch.init().then(function(){
                     iElement.append($compile($templateCache.get('templates/ngFlipSwitch.html'))(scope));
                     iElement.find('select').bind( "change", function(event, ui) {
-                        console.log('slider change');
                         scope.flipSwitchState = scope.flipSwitchSelect;
-                        console.log('switch state: '+ scope.flipSwitchState);
-
                     });
-                    console.log('FLIPSWITCHSTATE:' + scope.flipSwitchState);
                     iElement.find('select').slider();
                     // reproduce the same behavior if the component is clicked in the surrounding area
                     iElement.find('.ng-flip-switch-click-area').bind( "click", function(event, ui) {
-                        console.log('slider click change');
-                        var switchBtnPosition = "";
-                        if (scope.flipSwitchState === "false" || !angular.isDefined(scope.flipSwitchState) ) {
-                            console.log('state is false');
-                            switchBtnPosition = "100%";
-                        } else {
-                            switchBtnPosition = "0%";
-                        }
-                        iElement.find('a.ui-slider-handle').attr('style','left: '+switchBtnPosition+';');
+                        iElement.find('a.ui-slider-handle').attr('style','left: ' + scope.switchBtnPosition + ';');
+                        iElement.find('span.ui-slider-label.ui-slider-label-a').attr('style','width: ' + scope.switchBtnPosition + ';');
                     });
                 });
             }

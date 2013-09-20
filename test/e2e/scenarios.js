@@ -13,9 +13,7 @@ describe('angular flip-switch', function() {
     });
 
     it('should render flip-switch options', function() {
-        console.log('select is: ' + element('select').html());
-        expect(element('select').html()).toContain('ON');
-        expect(element('select').html()).toContain('OFF');
+        expect(element('span').html()).toContain('OFF');
     });
 
     it('should display the flip-switch label', function() {
@@ -23,14 +21,14 @@ describe('angular flip-switch', function() {
     });
 
     it('should slide the switch state when "ON" is selected', function() {
-        select('flipSwitchSelect').option('on');
+        select('flipSwitchSelect').option('true');
         expect(element('.ui-slider-label-a').attr('style')).toBe('width: 100%;');
         expect(element('.ui-slider-label-b').attr('style')).toBe('width: 0%;');
     });
 
     it('should slide the switch state when "OFF" is selected', function() {
-        select('flipSwitchSelect').option('on');
-        select('flipSwitchSelect').option('off');
+        select('flipSwitchSelect').option('true');
+        select('flipSwitchSelect').option('false');
         expect(element('.ui-slider-label-a').attr('style')).toBe('width: 0%;');
         expect(element('.ui-slider-label-b').attr('style')).toBe('width: 100%;');
     });
